@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAT Knowledge Center — Fluxograma de Entrevista SOP</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f0f4f8;
+    padding: 32px 16px 60px;
+    color: #1a1a1a;
+  }
+
+  .page {
+    max-width: 820px;
+    margin: 0 auto;
+  }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, #1A3A5C 0%, #1F7A8C 100%);
+    border-radius: 16px;
+    padding: 28px 32px;
+    color: white;
+    margin-bottom: 32px;
+    box-shadow: 0 4px 20px rgba(26,58,92,.25);
+  }
+  .header h1 { font-size: 22px; font-weight: 700; letter-spacing: .3px; }
+  .header p  { font-size: 13px; opacity: .8; margin-top: 4px; }
+  .header .meta { display: flex; gap: 20px; margin-top: 12px; flex-wrap: wrap; }
+  .header .meta span {
+    background: rgba(255,255,255,.15);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+  }
+
+  /* FLOW CONTAINER */
+  .flow { display: flex; flex-direction: column; align-items: center; gap: 0; }
+
+  /* ARROW */
+  .arrow {
+    width: 2px; height: 28px;
+    background: #94a3b8;
+    position: relative;
+  }
+  .arrow::after {
+    content: '';
+    position: absolute;
+    bottom: -7px; left: -5px;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 8px solid #94a3b8;
+  }
+  .arrow-label {
+    position: absolute;
+    left: 10px; top: 6px;
+    font-size: 11px; color: #64748b;
+    white-space: nowrap;
+  }
+
+  /* START / END */
+  .node-start, .node-end {
+    border-radius: 50px;
+    padding: 14px 36px;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    text-align: center;
+    min-width: 260px;
+  }
+  .node-start {
+    background: #1A3A5C;
+    color: white;
+    box-shadow: 0 3px 12px rgba(26,58,92,.35);
+  }
+  .node-end {
+    background: #2f9e44;
+    color: white;
+    box-shadow: 0 3px 12px rgba(47,158,68,.35);
+  }
+
+  /* BLOCO */
+  .bloco {
+    width: 100%;
+    max-width: 700px;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,.1);
+  }
+  .bloco-header {
+    padding: 11px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+    font-weight: 700;
+    font-size: 13.5px;
+  }
+  .bloco-header .tempo {
+    font-size: 11px;
+    font-weight: 400;
+    opacity: .85;
+    background: rgba(255,255,255,.2);
+    border-radius: 12px;
+    padding: 2px 10px;
+  }
+  .bloco-body {
+    background: white;
+    padding: 14px 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .bloco-body.single { grid-template-columns: 1fr; }
+
+  .question {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 12.5px;
+    line-height: 1.4;
+    color: #2d3748;
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 8px 10px;
+    border-left: 3px solid transparent;
+  }
+  .q-num {
+    font-weight: 700;
+    font-size: 12px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* PREP BLOCO */
+  .bloco-prep .bloco-header { background: #475569; }
+  .bloco-prep .question { border-left-color: #475569; }
+  .bloco-prep .q-num { color: #475569; }
+
+  /* TEAL BLOCOS */
+  .bloco-teal .bloco-header { background: #1F7A8C; }
+  .bloco-teal .question { border-left-color: #1F7A8C; }
+  .bloco-teal .q-num { color: #1F7A8C; }
+
+  /* DARK BLUE (Bloco 3) */
+  .bloco-dark .bloco-header { background: #1A3A5C; }
+  .bloco-dark .question { border-left-color: #1A3A5C; background: #EFF6FF; }
+  .bloco-dark .q-num { color: #1A3A5C; }
+  .bloco-dark .bloco-body { background: #f0f6ff; }
+  .bloco-dark .bloco-header::before {
+    content: '★ ';
+  }
+
+  /* ORANGE (Bloco 6) */
+  .bloco-orange .bloco-header { background: #c05621; }
+  .bloco-orange .question { border-left-color: #c05621; background: #FFF7ED; }
+  .bloco-orange .q-num { color: #c05621; }
+  .bloco-orange .bloco-body { background: #fff9f5; }
+
+  /* DECISION DIAMOND */
+  .decision-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 700px;
+    position: relative;
+  }
+  .diamond {
+    width: 200px; height: 80px;
+    background: white;
+    border: 2.5px solid #1F7A8C;
+    transform: rotate(45deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,.1);
+    margin: 16px 0;
+  }
+  .diamond-text {
+    transform: rotate(-45deg);
+    font-size: 11.5px;
+    font-weight: 600;
+    color: #1A3A5C;
+    text-align: center;
+    line-height: 1.3;
+    padding: 0 4px;
+    width: 130px;
+  }
+  .decision-branches {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+    gap: 0;
+    position: relative;
+  }
+  .branch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+  .branch-label {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 10px;
+    margin-bottom: 6px;
+  }
+  .branch-sim { background: #fed7d7; color: #c53030; }
+  .branch-nao { background: #c6f6d5; color: #276749; }
+
+  .side-box {
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 12px;
+    text-align: center;
+    color: #4a5568;
+    max-width: 180px;
+    box-shadow: 0 1px 6px rgba(0,0,0,.07);
+  }
+  .loop-arrow {
+    font-size: 11px;
+    color: #e53e3e;
+    text-align: center;
+    margin: 4px 0;
+    font-style: italic;
+  }
+
+  /* ACTION NODE */
+  .action-node {
+    width: 100%;
+    max-width: 700px;
+    background: white;
+    border-radius: 12px;
+    padding: 16px 24px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #1A3A5C;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,.09);
+    border-left: 5px solid #1F7A8C;
+  }
+  .action-node .sub {
+    font-size: 11.5px;
+    font-weight: 400;
+    color: #64748b;
+    margin-top: 3px;
+  }
+
+  /* HORIZONTAL LINE for decision split */
+  .h-line {
+    width: 60%;
+    height: 2px;
+    background: #94a3b8;
+    position: absolute;
+    top: 0;
+    left: 20%;
+  }
+
+  /* CONNECTOR LINES */
+  .connector {
+    display: flex;
+    width: 100%;
+    max-width: 700px;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    position: relative;
+  }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 12px;
+    color: #94a3b8;
+  }
+
+  /* PREP checklist style */
+  .prep-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 12.5px;
+    color: #2d3748;
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 8px 10px;
+    border-left: 3px solid #475569;
+  }
+  .prep-item::before { content: '□'; color: #475569; font-weight: 700; flex-shrink: 0; }
+
+  @media (max-width: 600px) {
+    .bloco-body { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <h1>SAT Knowledge Center — Fluxograma de Entrevista SOP</h1>
+    <p>Roteiro visual para Heloísa conduzir o levantamento de processos com cada gestor</p>
+    <div class="meta">
+      <span>🎯 Piloto: COMEX</span>
+      <span>⏱ Duração total: ~60 min</span>
+      <span>📋 24 perguntas em 7 blocos</span>
+      <span>📅 Maio 2026</span>
+    </div>
+  </div>
+
+  <div class="flow">
+
+    <!-- START -->
+    <div class="node-start">▶ INÍCIO DA ENTREVISTA</div>
+    <div class="arrow"></div>
+
+    <!-- BLOCO 0 -->
+    <div class="bloco bloco-prep">
+      <div class="bloco-header">
+        📋 BLOCO 0 — Preparação
+        <span class="tempo">Antes da reunião</span>
+      </div>
+      <div class="bloco-body">
+        <div class="prep-item">Listar os processos do departamento (Mapa de Processos)</div>
+        <div class="prep-item">Definir qual processo será mapeado nesta sessão</div>
+        <div class="prep-item">Avisar o gestor com 24h de antecedência</div>
+        <div class="prep-item">Preparar gravação (com permissão do gestor)</div>
+      </div>
+    </div>
+    <div class="arrow"></div>
+
+    <!-- BLOCO 1 -->
+    <div class="bloco bloco-teal">
+      <div class="bloco-header">
+        🏷 BLOCO 1 — Identificação
+        <span class="tempo">5 min</span>
+      </div>
+      <div class="bloco-body">
+        <div class="question"><span class="q-num">1.</span>Como você chamaria esse processo?</div>
+        <div class="question"><span class="q-num">2.</span>Qual é o objetivo final?</div>
+        <div class="question"><span class="q-num">3.</span>Quem é o dono do processo?</div>
+        <div class="question"><span class="q-num">4.</span>Com que frequência ocorre?</div>
+      </div>
+    </div>
+    <div class="arrow"></div>
+
+    <!-- BLOCO 2 -->
+    <div class="bloco bloco-teal">
+      <div class="bloco-header">
+        ⚡ BLOCO 2 — Gatilho e Entradas
+        <span class="tempo">10 min</span>
+      </div>
+      <div class="bloco-body">
+        <div class="question"><span class="q-num">5.</span>O que dispara esse processo?</div>
+        <div class="question"><span class="q-num">6.</span>O que você precisa ter em mãos antes de começar?</div>
+        <div class="question" style="grid-column: 1 / -1"><span class="q-num">7.</span>Tem pré-requisito de outro departamento? Quem precisa fazer algo antes de você?</div>
+      </div>
+    </div>
+    <div class="arrow"></div>
+
+    <!-- BLOCO 3 -->
+    <div class="bloco bloco-dark">
+      <div class="bloco-header">
+        BLOCO 3 — Passo a Passo &nbsp;<span style="opacity:.6;font-size:11px;">coração da entrevista</span>
+        <span class="tempo">20–30 min</span>
+      </div>
+      <div class="bloco-body">
+        <div class="question" style="grid-column: 1 / -1"><span class="q-num">8.</span>Me conta o processo do começo ao fim, como se eu fosse fazer pela primeira vez amanhã.</div>
+        <div class="question" style="grid-column: 1 / -1"><span class="q-num">9.</span>Para cada passo: Qual sistema usou? Notificou alguém? Registrou ou salvou algo?</div>
+        <div class="question" style="grid-column: 1 / -1"><span class="q-num">10.</span>Tem alguma etapa que você faz "de cabeça" e que nunca está escrita em lugar nenhum?</div>
+      </div>
+    </div>
+    <div class="arrow"></div>
+
+    <!-- BLOCO 4 -->
+    <div class="bloco bloco-teal">
+      <div class="bloco-header">
+        🛠 BLOCO 4 — Ferramentas e Sistemas
+        <span class="tempo">5 min</span>
+      </div>
+      <div class="bloco-body">
+        <div class="question"><span class="q-num">11.</span>Quais sistemas você usa nesse processo?</div>
+        <div class="question"><span class="q-num">12.</span>Tem planilha ou template? Pode compartilhar?</div>
+        <div class="question" style="grid-column: 1 / -1"><span class="q-num">13.</span>Precisa de acesso ou login específico para executar?</div>
+      </div>
+    </div>
+    <div class="arrow"></div>
+
+    <!-- BLOCO 5 -->
+    <div class="bloco bloco-teal">
+      <div class="bloco-header">
+        ⏱ BLOCO 5 — Tempo, Prazo e Qualidade
+        <span class="tempo">10 min</span>
+      </div>
+      <div class="bloco-body">
+        <div class="question"><span class="q-num">14.</span>Quanto tempo esse processo leva, do início ao fim?</div>
+        <div class="question"><span class="q-num">15.</span>Qual é o prazo máximo aceitável?</div>
+        <div class="question"><span class="q-num">16.</span>Como sabe que o processo foi feito direito?</div>
+        <div class="question"><span class="q-num">17.</span>Tem algum indicador ou métrica que já acompanha?</div>
+      </div>
+    </div>
+    <div class="arrow"></div>
+
+    <!-- BLOCO 6 -->
+    <div class="bloco bloco-orange">
+      <div class="bloco-header">
+        ⚠️ BLOCO 6 — Exceções e Problemas
+        <span class="tempo">10 min</span>
+      </div>
+      <div class="bloco-body">
+        <div class="question"><span class="q-num">18.</span>O que pode dar errado? Problemas mais comuns?</div>
+        <div class="question"><span class="q-num">19.</span>Quando dá errado, o que você faz? Tem plano B?</div>
+        <div class="question"><span class="q-num">20.</span>Já ocorreu situação crítica? Como foi resolvida?</div>
+        <div class="question"><span class="q-num">21.</span>Tem parte que depende de uma única pessoa?</div>
+      </div>
+    </div>
+    <div class="arrow"></div>
+
+    <!-- BLOCO 7 -->
+    <div class="bloco bloco-teal">
+      <div class="bloco-header">
+        🤖 BLOCO 7 — Fechamento e Automação
+        <span class="tempo">5 min</span>
+      </div>
+      <div class="bloco-body">
+        <div class="question"><span class="q-num">22.</span>O que nesse processo poderia ser automatizado?</div>
+        <div class="question"><span class="q-num">23.</span>Tem parte que consome tempo e agrega pouco?</div>
+        <div class="question" style="grid-column: 1 / -1"><span class="q-num">24.</span>Tem algo importante que eu não perguntei?</div>
+      </div>
+    </div>
+    <div class="arrow"></div>
+
+    <!-- DECISÃO 1: GESTOR TEM DÚVIDAS? -->
+    <div style="width:100%;max-width:700px;position:relative;">
+      <div style="display:flex;align-items:center;justify-content:center;position:relative;">
+        <div class="diamond">
+          <div class="diamond-text">Gestor tem dúvidas ou complementos?</div>
+        </div>
+      </div>
+
+      <!-- Branches -->
+      <div style="display:flex;justify-content:center;align-items:flex-start;gap:80px;margin-top:4px;">
+        <!-- SIM branch (left) -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+          <span class="branch-label branch-sim">SIM</span>
+          <div class="arrow" style="height:20px;"></div>
+          <div class="side-box">💬 Aprofundar ponto específico</div>
+          <div class="loop-arrow">↩ voltar ao bloco relevante</div>
+        </div>
+        <!-- NÃO branch (right) -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+          <span class="branch-label branch-nao">NÃO</span>
+          <div class="arrow" style="height:20px;"></div>
+          <div style="font-size:12px;color:#276749;font-weight:600;">continuar ↓</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arrow" style="margin-top:12px;"></div>
+
+    <!-- AÇÃO: RASCUNHO -->
+    <div class="action-node">
+      ✍️ Heloísa escreve o rascunho do SOP
+      <div class="sub">Prazo: 48 horas após a entrevista</div>
+    </div>
+    <div class="arrow"></div>
+
+    <!-- AÇÃO: VALIDAÇÃO -->
+    <div class="action-node">
+      👁 Gestor revisa e valida o rascunho
+      <div class="sub">Prazo: 24 horas após receber</div>
+    </div>
+    <div class="arrow"></div>
+
+    <!-- DECISÃO 2: APROVADO? -->
+    <div style="width:100%;max-width:700px;">
+      <div style="display:flex;align-items:center;justify-content:center;">
+        <div class="diamond" style="border-color:#2f9e44;">
+          <div class="diamond-text" style="color:#276749;">SOP aprovado pelo gestor?</div>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:center;align-items:flex-start;gap:80px;margin-top:4px;">
+        <!-- NÃO branch -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+          <span class="branch-label branch-sim">NÃO</span>
+          <div class="arrow" style="height:20px;"></div>
+          <div class="side-box">🔁 Revisar e corrigir</div>
+          <div class="loop-arrow">↩ voltar para validação</div>
+        </div>
+        <!-- SIM branch -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+          <span class="branch-label branch-nao">SIM</span>
+          <div class="arrow" style="height:20px;"></div>
+          <div style="font-size:12px;color:#276749;font-weight:600;">publicar ↓</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arrow" style="margin-top:12px;"></div>
+
+    <!-- END -->
+    <div class="node-end">✅ SOP PUBLICADO NO BOOKSTACK</div>
+
+    <!-- TEMPO TOTAL BADGE -->
+    <div style="margin-top:28px;background:white;border-radius:12px;padding:14px 28px;box-shadow:0 2px 10px rgba(0,0,0,.08);display:flex;gap:24px;flex-wrap:wrap;justify-content:center;font-size:12.5px;color:#4a5568;">
+      <span>⏱ <strong>Total entrevista:</strong> ~60 min</span>
+      <span>✍️ <strong>Rascunho SOP:</strong> 48h</span>
+      <span>✅ <strong>Validação:</strong> 24h</span>
+      <span>📦 <strong>Ciclo completo:</strong> ~4 dias por SOP</span>
+      <span>🎯 <strong>Meta:</strong> 5 SOPs COMEX em 3 semanas</span>
+    </div>
+
+  </div><!-- /flow -->
+
+  <div class="footer">
+    Sun Asia Trade Co. © 2026 — SAT Knowledge Center — Confidencial
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<title>Mapa de Processos · SAT · Versões</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Architects+Daughter&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:#1e1a14;font-family:'Kalam',cursive;color:#f3eedf;min-height:100vh;}
+  body{padding:48px 32px 80px;}
+  .header{max-width:1200px;margin:0 auto 40px;}
+  h1{font-family:'Architects Daughter';font-size:42px;letter-spacing:1px;margin:0 0 4px;color:#fff;}
+  .sub{font-size:18px;color:#bdb39f;}
+  .grid{
+    max-width:1200px;margin:0 auto;
+    display:grid;grid-template-columns:repeat(2,1fr);gap:22px;
+  }
+  .card{
+    position:relative;
+    border-radius:14px;overflow:hidden;
+    background:#2a2418;
+    border:1px solid rgba(255,255,255,.08);
+    text-decoration:none;color:inherit;
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    display:block;
+    min-height:260px;
+  }
+  .card:hover{transform:translateY(-4px);box-shadow:0 24px 60px rgba(0,0,0,.5);border-color:rgba(255,255,255,.22);}
+  .preview{
+    height:200px;position:relative;overflow:hidden;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Architects Daughter';font-size:14px;letter-spacing:1px;
+    text-transform:uppercase;
+  }
+  /* preview backgrounds */
+  .p-original{background: radial-gradient(ellipse at 20% 10%, #fbf7ec, #efe9db);color:#222;}
+  .p-mono{background:#fff;color:#000;border-bottom:1px solid #000;}
+  .p-blue{background: linear-gradient(180deg, #0a2540, #082038);color:#4cc9f0;
+    background-image:
+      linear-gradient(rgba(140,180,220,0.18) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(140,180,220,0.18) 1px, transparent 1px),
+      linear-gradient(180deg, #0a2540, #082038);
+    background-size: 24px 24px, 24px 24px, 100% 100%;
+    font-family:'JetBrains Mono',monospace;
+  }
+  .p-interativo{background:#fbf7ec;color:#222;
+    background-image:
+      radial-gradient(circle at 30% 40%, rgba(31,78,163,0.10) 0%, transparent 30%),
+      radial-gradient(circle at 70% 60%, rgba(217,107,44,0.10) 0%, transparent 30%);
+  }
+  .preview .glyph{
+    font-size:48px;font-family:'Architects Daughter';
+    border:2.4px solid currentColor;border-radius:14px 10px 16px 8px / 10px 16px 8px 14px;
+    padding:18px 30px;background:rgba(255,255,255,.4);
+    transform:rotate(-1deg);
+  }
+  .p-mono .glyph{background:#fff;border-radius:0;transform:none;}
+  .p-blue .glyph{border-radius:0;background:rgba(76,201,240,0.06);box-shadow:0 0 30px rgba(76,201,240,0.2);transform:none;letter-spacing:6px;}
+  .body{padding:18px 22px 22px;}
+  .body h2{margin:0 0 4px;font-family:'Architects Daughter';font-size:24px;letter-spacing:.5px;color:#fff;}
+  .body p{margin:0;font-size:16px;color:#bdb39f;line-height:1.45;}
+  .tag{
+    position:absolute;top:14px;right:14px;
+    font-family:'Architects Daughter';font-size:11px;letter-spacing:1px;
+    background:rgba(0,0,0,0.45);color:#fff;
+    padding:4px 10px;border-radius:14px;text-transform:uppercase;
+  }
+  .footer{max-width:1200px;margin:40px auto 0;font-size:14px;color:#7a7160;text-align:center;font-family:'Kalam';}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>Mapa de Processos · SAT Knowledge Center</h1>
+  <div class="sub">4 versões do mesmo mapa, para diferentes contextos de uso.</div>
+</div>
+
+<div class="grid">
+
+  <a class="card" href="Mapa de Processos SAT.html">
+    <span class="tag">v1 · padrão</span>
+    <div class="preview p-original"><div class="glyph">★ original</div></div>
+    <div class="body">
+      <h2>Whiteboard original</h2>
+      <p>A versão padrão em estilo quadro-branco, com tinta preta sobre papel creme. Ideal para apresentar internamente.</p>
+    </div>
+  </a>
+
+  <a class="card" href="Mapa SAT - Interativo.html">
+    <span class="tag">v2 · clicável</span>
+    <div class="preview p-interativo"><div class="glyph">→ SOP</div></div>
+    <div class="body">
+      <h2>Interativo com SOPs</h2>
+      <p>Clique em qualquer departamento, passo de auditoria ou etapa para abrir o SOP completo (objetivo, SLA, KPI, IA aplicada, evidências).</p>
+    </div>
+  </a>
+
+  <a class="card" href="Mapa SAT - Impressao Mono.html">
+    <span class="tag">v3 · impressão A2</span>
+    <div class="preview p-mono"><div class="glyph">A2 mono</div></div>
+    <div class="body">
+      <h2>Mono para impressão</h2>
+      <p>Preto sobre branco puro, sem acentos coloridos. Configurado para A2 landscape — abra e Ctrl+P / Cmd+P para imprimir.</p>
+    </div>
+  </a>
+
+  <a class="card" href="Mapa SAT - Blueprint.html">
+    <span class="tag">v4 · blueprint</span>
+    <div class="preview p-blue"><div class="glyph">[ BLUEPRINT ]</div></div>
+    <div class="body">
+      <h2>Blueprint técnico</h2>
+      <p>Estética de planta arquitetônica: fundo navy, grid milimétrico, linhas em ciano, tipografia monospace. Vibe de sala de engenharia.</p>
+    </div>
+  </a>
+
+</div>
+
+<div class="footer">SAT Knowledge Center · sistema integrado de Pessoas + Processos + IA</div>
+</body>
+</html>
